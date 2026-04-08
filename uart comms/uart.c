@@ -5,7 +5,7 @@ void initUART(void)
 {
     //Select UART pins (double check)
     P5SEL |= BIT6 | BIT7;		// P5.6 = UCA1TXD and P5.7 = UCA1RXD
-
+    UCA1CTL0 = UCPEN + UCPAR;
     UCA1CTL1 |= UCSWRST;		//Hold USCI in reset while configuring
     UCA1CTL1 |= UCSSEL_2;		//SMCLK as source
     //UCOS16 = 1; //Wrong implimentation, bit part of UCA0MCTL
