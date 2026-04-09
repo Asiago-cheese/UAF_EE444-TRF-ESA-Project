@@ -6,11 +6,12 @@ void initUART(void)
     //Select UART pins (When changing pins, change all UCAx values to match register)
     P5SEL |= BIT6 | BIT7;	    //P5.6 = UCA1TXD and P5.7 = UCA1RXD; for UCA1
     //P3SEL |= BIT4 | BIT5;       //P3.4 = UCA0TXD and P3.5 = UCA0RXD; for UCA0
-    UCA1CTL1 = UCSWRST;		    //Hold USCI in reset while configuring
+    UCA1CTL1 |= UCSWRST;		    //Hold USCI in reset while configuring
     UCA1CTL1 |= UCSSEL_2;		//SMCLK as source
-    UCA1CTL0 = UCPEN | UCPAR;   // UCPAR is parity (0 is even, 1 is odd);
-    UCA1CTL0 &= ~UCSPB;         // UCSPB is stop bit (0 is one stop bit, 1 is two)
-    UCA1CTL0 &= ~UC7BIT;        // UC7BIT is 8-bit data(0 is 8, 1 is 7);
+    UCA1CTL0 = 0;                 // UCA1CTL0 set to 0 makes parity sets to off, stop bit 1, data bits to 8
+    //UCA1CTL0 = UCPEN | UCPAR;   // UCPAR is parity (0 is even, 1 is odd; not used);
+    //UCA1CTL0 &= ~UCSPB;         // UCSPB is stop bit (0 is one stop bit, 1 is two)
+    //UCA1CTL0 &= ~UC7BIT;        // UC7BIT is 8-bit data(0 is 8, 1 is 7);
     //UCOS16 = 1; //Wrong implimentation, bit part of UCA0MCTL
     //table 
 
@@ -18,7 +19,7 @@ void initUART(void)
     //If UC0S16 =0 then N = CLK / Baud : (non-oversampling)
     //N = Clk / baud rate = 8e6 / 9600 = 833.333
     //BR0/BR1 = 833 
-    //If UC0S16 = 1 then N = CLK / (16 * Baud) : (Oversample)
+    //If UCOS16 = 1 then N = CLK / (16 * Baud) : (Oversample)
     //N = CLK / Baud = 8e6 / (16*115200) = 4.34...
     // Fractional portion: 0.3403; modulation value: 0.3403*16 = 5.44
     //BR0/BR1 = 4/0
