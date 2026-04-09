@@ -3,8 +3,8 @@
 //UART Setup// (Set to 9600, 8 bit, Odd Parity, 1 stop bit)
 void initUART(void)
 {
-    //Select UART pins (double check)
-    //P5SEL |= BIT6 | BIT7;	    //P5.6 = UCA1TXD and P5.7 = UCA1RXD; for UCA1
+    //Select UART pins (update all change all UCAx values to match register) 
+    //P5SEL |= BIT6 | BIT7;	    //P5.6 = UCA1TXD and P5.7 = UCA1RXD; for UCA1 
     P3SEL |= BIT4 | BIT5;       //P3.4 = UCA0TXD and P3.5 = UCA0RXD; for UCA0
     UCA0CTL1 = UCSWRST;		    //Hold USCI in reset while configuring
     UCA0CTL1 |= UCSSEL_2;		//SMCLK as source
