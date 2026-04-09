@@ -1,6 +1,6 @@
 #include <msp430.h>
 
-//UART Setup//
+//UART Setup// (Set to 9600, 8 bit, Odd Parity, 1 stop bit)
 void initUART(void)
 {
     //Select UART pins (double check)
