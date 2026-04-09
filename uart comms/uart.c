@@ -4,8 +4,8 @@
 void initUART(void)
 {
     //Select UART pins (double check)
-    //P5SEL |= BIT6 | BIT7;	    //P5.6 = UCA1TXD and P5.7 = UCA1RXD; for UCA1
-    P3SEL |= BIT4 | BIT5;       //P3.4 = UCA0TXD and P3.5 = UCA0RXD; for UCA0
+    P5SEL |= BIT6 | BIT7;	    //P5.6 = UCA1TXD and P5.7 = UCA1RXD; for UCA1
+    //P3SEL |= BIT4 | BIT5;       //P3.4 = UCA0TXD and P3.5 = UCA0RXD; for UCA0
     UCA1CTL1 = UCSWRST;		    //Hold USCI in reset while configuring
     UCA1CTL1 |= UCSSEL_2;		//SMCLK as source
     UCA1CTL0 = UCPEN | UCPAR;   // UCPAR is parity (0 is even, 1 is odd);
