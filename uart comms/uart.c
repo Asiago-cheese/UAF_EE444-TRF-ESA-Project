@@ -3,14 +3,14 @@
 //UART Setup// (Set to 9600, 8 bit, Odd Parity, 1 stop bit)
 void initUART(void)
 {
-    //Select UART pins (update all change all UCAx values to match register) 
-    //P5SEL |= BIT6 | BIT7;	    //P5.6 = UCA1TXD and P5.7 = UCA1RXD; for UCA1 
+    //Select UART pins (double check)
+    //P5SEL |= BIT6 | BIT7;	    //P5.6 = UCA1TXD and P5.7 = UCA1RXD; for UCA1
     P3SEL |= BIT4 | BIT5;       //P3.4 = UCA0TXD and P3.5 = UCA0RXD; for UCA0
-    UCA0CTL1 = UCSWRST;		    //Hold USCI in reset while configuring
-    UCA0CTL1 |= UCSSEL_2;		//SMCLK as source
-    UCA0CTL0 = UCPEN | UCPAR;   // UCPAR is parity (0 is even, 1 is odd);
-    UCA0CTL0 &= ~UCSPB;         // UCSPB is stop bit (0 is one stop bit, 1 is two)
-    UCA0CTL0 &= ~UC7BIT;        // UC7BIT is 8-bit data(0 is 8, 1 is 7);
+    UCA1CTL1 = UCSWRST;		    //Hold USCI in reset while configuring
+    UCA1CTL1 |= UCSSEL_2;		//SMCLK as source
+    UCA1CTL0 = UCPEN | UCPAR;   // UCPAR is parity (0 is even, 1 is odd);
+    UCA1CTL0 &= ~UCSPB;         // UCSPB is stop bit (0 is one stop bit, 1 is two)
+    UCA1CTL0 &= ~UC7BIT;        // UC7BIT is 8-bit data(0 is 8, 1 is 7);
     //UCOS16 = 1; //Wrong implimentation, bit part of UCA0MCTL
     //table 
 
@@ -25,18 +25,18 @@ void initUART(void)
     // note: MSP430 can not store 833 in single register, max value per register is 255
     //Values are stored in two registers instead
 
-    UCA0BR0 = 52;		    //lower divider byte
-    UCA0BR1 = 0;		    //upper divider byte
-    UCA0MCTL = UCBRF_1 | UCBRS_0 | UCOS16;	// 1st stage modulation(fractional baud correction) + 2nd stage modulation + oversampling
+    UCA1BR0 = 52;		    //lower divider byte
+    UCA1BR1 = 0;		    //upper divider byte
+    UCA1MCTL = UCBRF_1 | UCBRS_0 | UCOS16;	// 1st stage modulation(fractional baud correction) + 2nd stage modulation + oversampling
 
-    UCA0CTL1 &= ~UCSWRST; 		//Enable UART
+    UCA1CTL1 &= ~UCSWRST; 		//Enable UART
 }
 
 //UART transmit functions
 void uartSendChar(char c)
 {
-    while (!(UCA0IFG & UCTXIFG));
-    UCA0TXBUF = c;
+    while (!(UCA1IFG & UCTXIFG));
+    UCA1TXBUF = c;
 }
 void uartSendString(const char *str)
 {
